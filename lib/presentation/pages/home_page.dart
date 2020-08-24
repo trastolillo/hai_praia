@@ -5,7 +5,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hay praia returns'),
+        title: const Text('Hay praia returns'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(8),
@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
   }
 
   List<ListTile> listItem() {
-    final item = ListTile(
+    const item = ListTile(
       leading: CircleAvatar(
         child: Icon(Icons.wb_sunny),
       ),
