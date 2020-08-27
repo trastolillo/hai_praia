@@ -17,8 +17,8 @@ class MeteogaliciaDto {
       MeteogaliciaDto(
           type: json['type'] as String,
           crs: Crs.fromJson(json['crs'] as Map<String, dynamic>),
-          features: (json['features'] as List<Map<String, dynamic>>)
-              .map((e) => Feature.fromJson(e))
+          features: (json['features'] as List<dynamic>)
+              .map((e) => Feature.fromJson(e as Map<String, dynamic>))
               .toList());
 
   Map<String, dynamic> toJson() => {

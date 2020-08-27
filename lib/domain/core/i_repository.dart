@@ -6,7 +6,7 @@ import 'failures.dart';
 import 'localizacion.dart';
 import 'prediccion.dart';
 
-abstract class IFacade {
+abstract class IRepository {
   Future<Either<ValueFailure, Prediccion>> getData({
     @required From tipoPrediccion,
     @required Localizacion localizacion,

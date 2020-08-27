@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart' show required;
-import 'package:hai_praia/infrastructure/doc/api/api_key.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
+
+import '../../../doc/api/api_key.dart';
 
 class UrlService {
   static Uri meteoGalicia({
@@ -10,7 +11,7 @@ class UrlService {
   }) {
     // TODO: Crear métodos para el formato de las fechas
     final String endTime = DateFormat('yyyy-MM-dd')
-        .format(DateTime.now().add(const Duration(days: 6)));
+        .format(DateTime.now().add(Duration(days: diasPrediccion)));
     return Uri(
         scheme: 'http',
         host: 'servizos.meteogalicia.es',
@@ -18,7 +19,7 @@ class UrlService {
         queryParameters: {
           'endtime': endTime,
           // TODO: Crear localizaciones
-          'locationIds': locationId,
+          'locationIds': locationId.toString(),
           'lang': 'es',
           'API_KEY': ApiKey.meteoGalicia,
         });

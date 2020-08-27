@@ -170,8 +170,8 @@ class FeatureProperties {
         port: Port.fromJson(json['port'] as Map<String, dynamic>),
         referencePort:
             Port.fromJson(json['referencePort'] as Map<String, dynamic>),
-        days: (json['days'] as List<Map<String, dynamic>>)
-            .map((e) => Day.fromJson(e))
+        days: (json['days'] as List<dynamic>)
+            .map((e) => Day.fromJson(e as Map<String, dynamic>))
             .toList(),
         // TODO quitar este null
       );
@@ -232,8 +232,8 @@ class Day {
   factory Day.fromJson(Map<String, dynamic> json) => Day(
       timePeriod:
           TimePeriod.fromJson(json['timePeriod'] as Map<String, dynamic>),
-      variables: (json['variables'] as List<Map<String, dynamic>>)
-          .map((e) => Variable.fromJson(e))
+      variables: (json['variables'] as List<dynamic>)
+          .map((e) => Variable.fromJson(e as Map<String, dynamic>))
           .toList());
 
   Map<String, dynamic> toJson() => {
@@ -331,11 +331,13 @@ class Variable {
   factory Variable.fromJson(Map<String, dynamic> json) => Variable(
         name: json['name'] as String,
         units: json['units'] as String,
-        summary: (json['summary'] as List<Map<String, dynamic>>)
-            .map((summaryItem) => Summary.fromJson(summaryItem))
+        summary: (json['summary'] as List<dynamic>)
+            .map((summaryItem) =>
+                Summary.fromJson(summaryItem as Map<String, dynamic>))
             .toList(),
-        values: (json['values'] as List<Map<String, dynamic>>)
-            .map((valueItem) => Value.fromJson(valueItem))
+        values: (json['values'] as List<dynamic>)
+            .map((valueItem) =>
+                Value.fromJson(valueItem as Map<String, dynamic>))
             .toList(),
       );
 
@@ -385,7 +387,7 @@ class Summary {
       id: json['id'] as String,
       state: json['state'] as String,
       timeInstant: json['timeInstant'] as String,
-      height: json['height'] as double);
+      height: (json['height'] as num).toDouble());
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -431,7 +433,7 @@ class Value {
 
   factory Value.fromJson(Map<String, dynamic> json) => Value(
         timeInstant: json['timeInstant'] as String,
-        height: json['height'] as double,
+        height: (json['height'] as num).toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
