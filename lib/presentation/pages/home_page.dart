@@ -1,12 +1,25 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:hai_praia/infrastructure/datasources/remote_data/fetch_data/meteogalicia_fetch/meteogalicia_data.dart';
+
+import '../../infrastructure/datasources/remote_data/fetch_data/meteogalicia_data/meteogalicia_data.dart';
+import '../../infrastructure/datasources/remote_data/fetch_data/openweather_data/openweather_actual_data.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final meteogaliciaFetch =
-        MeteogaliciaData(diasPrediccion: 1, locationId: 59791, dio: Dio());
+    final dio = Dio();
+    final meteogaliciaData =
+        MeteogaliciaData(diasPrediccion: 1, locationId: 59791, dio: dio);
+    final openweatherPrediccionData = OpenweatherActualData(
+      localidad: 'Santander',
+      isActual: false,
+      dio: dio,
+    );
+    final openweatherActualData = OpenweatherActualData(
+      localidad: 'Santander',
+      isActual: true,
+      dio: dio,
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text('Hay praia returns'),
@@ -16,7 +29,11 @@ class HomePage extends StatelessWidget {
         children: listItem(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => meteogaliciaFetch.getData(),
+        onPressed: () {
+          openweatherPrediccionData.getData();
+          meteogaliciaData.getData();
+          openweatherActualData.getData();
+        },
         child: const Icon(Icons.update),
       ),
     );

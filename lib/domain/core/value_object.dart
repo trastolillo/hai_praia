@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:hai_praia/domain/core/errors.dart';
-import 'package:hai_praia/domain/core/failures.dart';
+import 'package:hai_praia/domain/core/value_failures.dart';
 
 abstract class ValueObject<T> {
   const ValueObject();

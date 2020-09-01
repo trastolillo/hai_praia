@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 
 import '../core/enums.dart';
-import '../core/failures.dart';
+import '../core/value_failures.dart';
 
 Either<ValueFailure<String>, String> fromDegreeToCardinal(int degrees) {
   if ((degrees >= 0 && degrees <= 23) || (degrees >= 337 && degrees <= 360)) {

@@ -1,0 +1,6 @@
+{
+  "exception": {
+    "code": "214",
+    "message": "El intervalo temporal indicado no puede finalizar antes del día actual."
+  }
+}

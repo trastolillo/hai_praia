@@ -1,0 +1,43 @@
+{
+  "coord": {
+    "lon": -3.8,
+    "lat": 43.46
+  },
+  "weather": [
+    {
+      "id": 804,
+      "main": "Clouds",
+      "description": "nubes",
+      "icon": "04n"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 17.06,
+    "feels_like": 17.61,
+    "temp_min": 16.11,
+    "temp_max": 17.78,
+    "pressure": 1017,
+    "humidity": 82
+  },
+  "visibility": 8000,
+  "wind": {
+    "speed": 1,
+    "deg": 0
+  },
+  "clouds": {
+    "all": 100
+  },
+  "dt": 1598920231,
+  "sys": {
+    "type": 1,
+    "id": 6441,
+    "country": "ES",
+    "sunrise": 1598938776,
+    "sunset": 1598986262
+  },
+  "timezone": 7200,
+  "id": 3109718,
+  "name": "Santander",
+  "cod": 200
+}

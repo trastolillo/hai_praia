@@ -15,11 +15,12 @@ class MeteogaliciaDto {
 
   factory MeteogaliciaDto.fromJson(Map<String, dynamic> json) =>
       MeteogaliciaDto(
-          type: json['type'] as String,
-          crs: Crs.fromJson(json['crs'] as Map<String, dynamic>),
-          features: (json['features'] as List<dynamic>)
-              .map((e) => Feature.fromJson(e as Map<String, dynamic>))
-              .toList());
+        type: json['type'] as String,
+        crs: Crs.fromJson(json['crs'] as Map<String, dynamic>),
+        features: (json['features'] as List<dynamic>)
+            .map((e) => Feature.fromJson(e as Map<String, dynamic>))
+            .toList(),
+      );
 
   Map<String, dynamic> toJson() => {
         'type': type,

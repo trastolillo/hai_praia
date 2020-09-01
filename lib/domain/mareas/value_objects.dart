@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-import '../core/failures.dart';
+import '../core/value_failures.dart';
 import '../core/value_object.dart';
 import 'value_validators.dart';
 
