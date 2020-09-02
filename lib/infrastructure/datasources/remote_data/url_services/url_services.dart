@@ -80,10 +80,28 @@ class UrlService {
       path: '/json',
       queryParameters: {
         'date': diaPrediccion,
-        'lat': location.latitude,
-        'lng': location.longitude,
+        'lat': location.latitude.toString(),
+        'lng': location.longitude.toString(),
         'formatted': '0'
       },
+    );
+  }
+
+  static Uri armadaDiaria({
+    @required String puerto,
+    DateTime date,
+  }) {
+    // TODO: Urgente implementar los métodos DateTime
+    final dia = date.day;
+    final mes = date.month;
+    final year = date.year;
+    return Uri(
+      scheme: 'https',
+      host: 'armada.defensa.gob.es',
+      pathSegments: [
+        'ihm/Documentacion/Mareas//json/',
+        '$year/$puerto/${puerto}_$year-$mes-$dia.json'
+      ],
     );
   }
 }

@@ -11,13 +11,13 @@ import '../../../../dto/openweather_dto/openweather_exception/openweather_except
 import '../../../../dto/openweather_dto/prediccion/openweather_prediccion_dto.dart';
 import '../../url_services/url_services.dart';
 
-class OpenweatherActualData {
+class OpenweatherData {
   // TODO: Construir objeto Localizacion para implementar coordenadas
   final String localidad;
   final bool isActual;
   final Dio dio;
 
-  OpenweatherActualData({
+  OpenweatherData({
     @required this.localidad,
     @required this.isActual,
     @required this.dio,
