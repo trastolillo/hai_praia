@@ -20,8 +20,11 @@ class ArmadaDto {
         puerto: json['puerto'] as String,
         fecha: json['fecha'] as String,
         ndatos: json['ndatos'] as String,
-        values: (json['values'] as List<num>).map((e) => e.toDouble()).toList(),
-        hours: json['hours'] as List<String>,
+        values: (json['values'] as List<dynamic>)
+            .map((e) => (e as num).toDouble())
+            .toList(),
+        hours:
+            (json['hours'] as List<dynamic>).map((e) => e.toString()).toList(),
       );
 
   @override

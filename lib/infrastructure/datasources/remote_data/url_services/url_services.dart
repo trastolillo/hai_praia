@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart' show required;
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 
+import '../../../../domain/core/logger.dart';
 import '../../../doc/api/api_key.dart';
 
 class UrlService {
@@ -30,7 +31,7 @@ class UrlService {
   /// datos del día actual y la predicción de los días siguientes.
   static Uri openweatherCoordenadas({
     @required LocationData location,
-    @required bool esHoy,
+    bool esHoy = true,
   }) {
     final tipoPrediccion = esHoy ? 'weather' : 'forecast';
     return Uri(
@@ -38,8 +39,8 @@ class UrlService {
       host: 'api.openweathermap.org',
       path: '/data/2.5/$tipoPrediccion',
       queryParameters: {
-        'lat': location.latitude,
-        'lon': location.longitude,
+        'lat': location.latitude.toString(),
+        'lon': location.longitude.toString(),
         'lang': 'es',
         'units': 'metric',
         'appid': ApiKey.openweather
@@ -50,7 +51,7 @@ class UrlService {
   /// Envía consulta a Openweather a través de la localidad
   static Uri openweatherLocalidad({
     @required String localidad,
-    @required bool esHoy,
+    bool esHoy = true,
   }) {
     final tipoPrediccion = esHoy ? 'weather' : 'forecast';
     return Uri(
@@ -92,16 +93,35 @@ class UrlService {
     DateTime date,
   }) {
     // TODO: Urgente implementar los métodos DateTime
-    final dia = date.day;
-    final mes = date.month;
-    final year = date.year;
+    final dateOrToday = date ?? DateTime.now();
+    final formatter = DateFormat('yyyy-MM-dd');
+    final fecha = formatter.format(dateOrToday);
+    // final dia = dateOrToday.day;
+    // final mes = dateOrToday.month;
+    final year = dateOrToday.year;
     return Uri(
       scheme: 'https',
       host: 'armada.defensa.gob.es',
-      pathSegments: [
-        'ihm/Documentacion/Mareas//json/',
-        '$year/$puerto/${puerto}_$year-$mes-$dia.json'
-      ],
+      path:
+          'ihm/Documentacion/Mareas//json/$year/${puerto.toLowerCase()}/${puerto.toLowerCase()}_$fecha.json',
     );
   }
+
+  static Uri armadaMensual({
+    @required String puerto,
+    DateTime date,
+  }) {
+    // TODO: Urgente implementar los métodos DateTime
+    final dateOrToday = date ?? DateTime.now();
+    final mes = dateOrToday.month.toString().padLeft(2, '0');
+    final year = dateOrToday.year;
+    return Uri(
+      scheme: 'https',
+      host: 'armada.defensa.gob.es',
+      path:
+          'ihm/Documentacion/Mareas//json/$year/${puerto.toLowerCase()}/${puerto.toLowerCase()}_mes_$mes.json',
+    );
+  }
+  // santander_mes_09.json
+
 }

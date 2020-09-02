@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart' show required;
-import 'package:flutter/services.dart';
+import 'package:location/location.dart';
 
 import '../../../../../domain/core/logger.dart';
 import '../../../../../domain/core/server_failures.dart';
@@ -13,44 +12,43 @@ import '../../url_services/url_services.dart';
 
 class OpenweatherData {
   // TODO: Construir objeto Localizacion para implementar coordenadas
+  final bool isHoy;
   final String localidad;
-  final bool isActual;
-  final Dio dio;
 
   OpenweatherData({
-    @required this.localidad,
-    @required this.isActual,
-    @required this.dio,
+    this.isHoy = true,
+    this.localidad,
   });
 
   Future<Either<ServerFailure, OpenweatherDto>> getData() async {
+    final dio = Dio();
     try {
-      final uri = UrlService.openweatherLocalidad(
-        localidad: localidad,
-        esHoy: isActual,
-      );
+      final coords = await Location().getLocation();
+      final uri = localidad == null
+          ? UrlService.openweatherCoordenadas(location: coords, esHoy: isHoy)
+          : UrlService.openweatherLocalidad(localidad: localidad, esHoy: isHoy);
       logger.i(uri.toString());
       final response = (await dio.getUri(uri)).data as Map<String, dynamic>;
+
       if (_isException(response)) {
+        logger.d('_isException: ${_isException(response)}');
         final openweatherException = OpenweatherException.fromJson(response);
         logger.e('Mensaje: ${openweatherException.message}');
         return left(ServerFailure<OpenweatherException>.serverError(
             openweatherException));
       }
-      final result = isActual
+      final result = isHoy
           ? OpenweatherActualDto.fromJson(response)
           : OpenweatherPrediccionDto.fromJson(response);
       logger.i(result);
       return right(result);
-    } on PlatformException catch (error) {
-      logger.e(error.message);
-      return left(ServerFailure<PlatformException>.serverError(error));
+    } on DioError catch (e) {
+      logger.e(e.request.path);
+      logger.e(e.error);
+      return left(ServerFailure<DioError>.serverError(e));
     }
   }
 
-  bool _isException(Map<String, dynamic> response) {
-    return isActual
-        ? response['cod'] as int != 200
-        : (response['cod'] as String) != '200';
-  }
+  bool _isException(Map<String, dynamic> response) =>
+      response['cod'] != 200 && response['cod'] != '200';
 }

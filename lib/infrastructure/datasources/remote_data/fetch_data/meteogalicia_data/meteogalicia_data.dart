@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' show required;
 import 'package:flutter/services.dart';
-import 'package:hai_praia/domain/core/server_failures.dart';
-import 'package:hai_praia/infrastructure/dto/meteogalicia_dto/meteogalicia_exception/meteogalicia_exception.dart';
 
 import '../../../../../domain/core/logger.dart';
+import '../../../../../domain/core/server_failures.dart';
 import '../../../../dto/meteogalicia_dto/meteogalicia_dto.dart';
+import '../../../../dto/meteogalicia_dto/meteogalicia_exception/meteogalicia_exception.dart';
 import '../../url_services/url_services.dart';
 
 class MeteogaliciaData {
