@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart' show required;
 import 'package:flutter/foundation.dart';
 
+import '../../core/date_utils.dart';
+
 class ArmadaDto {
   ArmadaDto({
     @required this.puerto,
@@ -15,6 +17,23 @@ class ArmadaDto {
   final String ndatos;
   final List<double> values;
   final List<String> hours;
+
+  bool get isMensual => values.length > 28;
+
+  int get currentMonth {
+    if (!isMensual) {
+      return DateTime.parse(fecha).month;
+    }
+    final mes = fecha.split(',')[0];
+    return monthStringToInt(mes);
+  }
+
+  int get currentDay {
+    if (isMensual) {
+      throw const FormatException("Error en ArmadaDto - getter currentDay");
+    }
+    return DateTime.parse(fecha).day;
+  }
 
   factory ArmadaDto.fromJson(Map<String, dynamic> json) => ArmadaDto(
         puerto: json['puerto'] as String,

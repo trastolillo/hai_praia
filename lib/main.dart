@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hai_praia/presentation/pages/home_page.dart';
 
-void main() {
+import 'infrastructure/datasources/local_data/bd/database.dart';
+import 'presentation/pages/home_page.dart';
+
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  await Database.init();
   runApp(MyApp());
 }
 
