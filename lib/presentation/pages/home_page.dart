@@ -1,12 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:hai_praia/domain/core/logger.dart';
-import 'package:hai_praia/infrastructure/datasources/remote_data/fetch_data/armada_data/armada_data.dart';
-import 'package:hai_praia/infrastructure/datasources/remote_data/fetch_data/sunrise_sunset_data/sunrise_sunset_data.dart';
 
-import '../../infrastructure/datasources/remote_data/fetch_data/meteogalicia_data/meteogalicia_data.dart';
-import '../../infrastructure/datasources/remote_data/fetch_data/openweather_data/openweather_data.dart';
+import '../../domain/core/logger.dart';
+import '../../infrastructure/datasources/remote_data/get_remote_data/armada_data/armada_data.dart';
+import '../../infrastructure/datasources/remote_data/get_remote_data/meteogalicia_data/meteogalicia_data.dart';
+import '../../infrastructure/datasources/remote_data/get_remote_data/openweather_data/openweather_data.dart';
+import '../../infrastructure/datasources/remote_data/get_remote_data/sunrise_sunset_data/sunrise_sunset_data.dart';
 
 class HomePage extends StatelessWidget {
   @override

@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 
-class SunriseSunsetDto {
+import '../data_transfer_object.dart';
+
+class SunriseSunsetDto extends DataTransferObject {
   SunriseSunsetDto({
     @required this.results,
     @required this.status,

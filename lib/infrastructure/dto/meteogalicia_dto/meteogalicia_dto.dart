@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 
+import '../data_transfer_object.dart';
 import 'sub_dto/sub_dto.dart';
 
-class MeteogaliciaDto {
+class MeteogaliciaDto extends DataTransferObject {
   MeteogaliciaDto({
     @required this.type,
     @required this.crs,

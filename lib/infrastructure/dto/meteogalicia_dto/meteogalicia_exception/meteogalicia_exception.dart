@@ -1,4 +1,6 @@
-class MeteogaliciaException {
+import '../../data_transfer_object.dart';
+
+class MeteogaliciaException extends DataTransferObject {
   final String _code;
   final String _message;
 

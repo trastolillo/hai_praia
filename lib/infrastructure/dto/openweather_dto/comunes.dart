@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart' show required;
+import 'package:flutter/foundation.dart';
 
 class Coord {
   Coord({

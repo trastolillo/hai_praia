@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart' show required;
 import 'package:flutter/foundation.dart';
 
 import '../openweather_dto.dart';

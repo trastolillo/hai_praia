@@ -1,3 +1,14 @@
+extension DateTimeExtension on DateTime {
+  DateTime get onlyDate => DateTime(year, month, day);
+  int get secondsSinceEpoch => millisecondsSinceEpoch ~/ 1000;
+  static DateTime fromSecondsSinceEpoch(int seconds) =>
+      DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
+}
+
+void foo() {
+  final bla = DateTimeExtension.fromSecondsSinceEpoch(100000000);
+}
+
 int monthStringToInt(String monthString) {
   switch (monthString.toLowerCase()) {
     case 'enero':

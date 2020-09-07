@@ -1,4 +1,6 @@
-class SunriseSunsetException {
+import '../data_transfer_object.dart';
+
+class SunriseSunsetException extends DataTransferObject {
   final String _status;
 
   SunriseSunsetException(this._status);

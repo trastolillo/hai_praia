@@ -12,14 +12,20 @@ class Database {
     return Hive.initFlutter(appDocumentDir.path);
   }
 
-  Future<void> addToDatabase({
+  /// Añade un objeto [Map<String, dynamic] a la base de datos local. Si
+  /// el argumento [deleteOldItems] es  [true] eliminará los registros
+  /// antiguos dejando un número de registros igual al valor del argumento
+  /// [limitOfItems]
+  Future<void> addToDatabaseAndDeleteOld({
     @required String boxName,
     @required Map<String, dynamic> map,
+    bool deleteOldItems = false,
+    int limitOfItems = 1,
   }) async {
     final box = await Hive.openBox<Map<String, dynamic>>(boxName);
     final key = _keyTimeStamp();
     await box.put(key, map);
-    await _deleteOldItem(box, key);
+    if (deleteOldItems) _deleteOldItems(box, key, limitOfItems);
     await box.close();
   }
 
@@ -35,15 +41,22 @@ class Database {
     return map;
   }
 
-  Future<void> _deleteOldItem(Box box, int key) async {
+  Future<void> _deleteOldItems(Box box, int key, int limitOfItems) async {
     var isDeleted = false;
     for (final oldKey in box.keys) {
-      if (oldKey is int && oldKey < key) {
-        await box.delete(oldKey);
-        isDeleted = true;
+      while (box.length > limitOfItems) {
+        if (oldKey is int && oldKey < key) {
+          await box.delete(oldKey);
+          isDeleted = true;
+        }
       }
     }
     if (isDeleted) await box.compact();
+  }
+
+  Future<bool> isDatabaseEmpty({@required String boxName}) async {
+    final box = await Hive.openBox(boxName);
+    return box.isEmpty;
   }
 
   int _keyTimeStamp() {
