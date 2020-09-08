@@ -9,8 +9,8 @@ part of 'server_failures.dart';
 
 T _$identity<T>(T value) => value;
 
-class _$ServerFailureTearOff {
-  const _$ServerFailureTearOff();
+class _$FailureTearOff {
+  const _$FailureTearOff();
 
 // ignore: unused_element
   _ServerError<T> serverError<T>(T failure) {
@@ -18,50 +18,59 @@ class _$ServerFailureTearOff {
       failure,
     );
   }
+
+// ignore: unused_element
+  _LocalDatabaseError<T> localDatabaseError<T>(T failure) {
+    return _LocalDatabaseError<T>(
+      failure,
+    );
+  }
 }
 
 // ignore: unused_element
-const $ServerFailure = _$ServerFailureTearOff();
+const $Failure = _$FailureTearOff();
 
-mixin _$ServerFailure<T> {
+mixin _$Failure<T> {
   T get failure;
 
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result serverError(T failure),
+    @required Result localDatabaseError(T failure),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result serverError(T failure),
+    Result localDatabaseError(T failure),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result serverError(_ServerError<T> value),
+    @required Result localDatabaseError(_LocalDatabaseError<T> value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result serverError(_ServerError<T> value),
+    Result localDatabaseError(_LocalDatabaseError<T> value),
     @required Result orElse(),
   });
 
-  $ServerFailureCopyWith<T, ServerFailure<T>> get copyWith;
+  $FailureCopyWith<T, Failure<T>> get copyWith;
 }
 
-abstract class $ServerFailureCopyWith<T, $Res> {
-  factory $ServerFailureCopyWith(
-          ServerFailure<T> value, $Res Function(ServerFailure<T>) then) =
-      _$ServerFailureCopyWithImpl<T, $Res>;
+abstract class $FailureCopyWith<T, $Res> {
+  factory $FailureCopyWith(Failure<T> value, $Res Function(Failure<T>) then) =
+      _$FailureCopyWithImpl<T, $Res>;
   $Res call({T failure});
 }
 
-class _$ServerFailureCopyWithImpl<T, $Res>
-    implements $ServerFailureCopyWith<T, $Res> {
-  _$ServerFailureCopyWithImpl(this._value, this._then);
+class _$FailureCopyWithImpl<T, $Res> implements $FailureCopyWith<T, $Res> {
+  _$FailureCopyWithImpl(this._value, this._then);
 
-  final ServerFailure<T> _value;
+  final Failure<T> _value;
   // ignore: unused_field
-  final $Res Function(ServerFailure<T>) _then;
+  final $Res Function(Failure<T>) _then;
 
   @override
   $Res call({
@@ -74,7 +83,7 @@ class _$ServerFailureCopyWithImpl<T, $Res>
 }
 
 abstract class _$ServerErrorCopyWith<T, $Res>
-    implements $ServerFailureCopyWith<T, $Res> {
+    implements $FailureCopyWith<T, $Res> {
   factory _$ServerErrorCopyWith(
           _ServerError<T> value, $Res Function(_ServerError<T>) then) =
       __$ServerErrorCopyWithImpl<T, $Res>;
@@ -82,8 +91,7 @@ abstract class _$ServerErrorCopyWith<T, $Res>
   $Res call({T failure});
 }
 
-class __$ServerErrorCopyWithImpl<T, $Res>
-    extends _$ServerFailureCopyWithImpl<T, $Res>
+class __$ServerErrorCopyWithImpl<T, $Res> extends _$FailureCopyWithImpl<T, $Res>
     implements _$ServerErrorCopyWith<T, $Res> {
   __$ServerErrorCopyWithImpl(
       _ServerError<T> _value, $Res Function(_ServerError<T>) _then)
@@ -110,7 +118,7 @@ class _$_ServerError<T> implements _ServerError<T> {
 
   @override
   String toString() {
-    return 'ServerFailure<$T>.serverError(failure: $failure)';
+    return 'Failure<$T>.serverError(failure: $failure)';
   }
 
   @override
@@ -133,8 +141,10 @@ class _$_ServerError<T> implements _ServerError<T> {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result serverError(T failure),
+    @required Result localDatabaseError(T failure),
   }) {
     assert(serverError != null);
+    assert(localDatabaseError != null);
     return serverError(failure);
   }
 
@@ -142,6 +152,7 @@ class _$_ServerError<T> implements _ServerError<T> {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result serverError(T failure),
+    Result localDatabaseError(T failure),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -155,8 +166,10 @@ class _$_ServerError<T> implements _ServerError<T> {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result serverError(_ServerError<T> value),
+    @required Result localDatabaseError(_LocalDatabaseError<T> value),
   }) {
     assert(serverError != null);
+    assert(localDatabaseError != null);
     return serverError(this);
   }
 
@@ -164,6 +177,7 @@ class _$_ServerError<T> implements _ServerError<T> {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result serverError(_ServerError<T> value),
+    Result localDatabaseError(_LocalDatabaseError<T> value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -174,11 +188,128 @@ class _$_ServerError<T> implements _ServerError<T> {
   }
 }
 
-abstract class _ServerError<T> implements ServerFailure<T> {
+abstract class _ServerError<T> implements Failure<T> {
   const factory _ServerError(T failure) = _$_ServerError<T>;
 
   @override
   T get failure;
   @override
   _$ServerErrorCopyWith<T, _ServerError<T>> get copyWith;
+}
+
+abstract class _$LocalDatabaseErrorCopyWith<T, $Res>
+    implements $FailureCopyWith<T, $Res> {
+  factory _$LocalDatabaseErrorCopyWith(_LocalDatabaseError<T> value,
+          $Res Function(_LocalDatabaseError<T>) then) =
+      __$LocalDatabaseErrorCopyWithImpl<T, $Res>;
+  @override
+  $Res call({T failure});
+}
+
+class __$LocalDatabaseErrorCopyWithImpl<T, $Res>
+    extends _$FailureCopyWithImpl<T, $Res>
+    implements _$LocalDatabaseErrorCopyWith<T, $Res> {
+  __$LocalDatabaseErrorCopyWithImpl(_LocalDatabaseError<T> _value,
+      $Res Function(_LocalDatabaseError<T>) _then)
+      : super(_value, (v) => _then(v as _LocalDatabaseError<T>));
+
+  @override
+  _LocalDatabaseError<T> get _value => super._value as _LocalDatabaseError<T>;
+
+  @override
+  $Res call({
+    Object failure = freezed,
+  }) {
+    return _then(_LocalDatabaseError<T>(
+      failure == freezed ? _value.failure : failure as T,
+    ));
+  }
+}
+
+class _$_LocalDatabaseError<T> implements _LocalDatabaseError<T> {
+  const _$_LocalDatabaseError(this.failure) : assert(failure != null);
+
+  @override
+  final T failure;
+
+  @override
+  String toString() {
+    return 'Failure<$T>.localDatabaseError(failure: $failure)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _LocalDatabaseError<T> &&
+            (identical(other.failure, failure) ||
+                const DeepCollectionEquality().equals(other.failure, failure)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failure);
+
+  @override
+  _$LocalDatabaseErrorCopyWith<T, _LocalDatabaseError<T>> get copyWith =>
+      __$LocalDatabaseErrorCopyWithImpl<T, _LocalDatabaseError<T>>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result serverError(T failure),
+    @required Result localDatabaseError(T failure),
+  }) {
+    assert(serverError != null);
+    assert(localDatabaseError != null);
+    return localDatabaseError(failure);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result serverError(T failure),
+    Result localDatabaseError(T failure),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (localDatabaseError != null) {
+      return localDatabaseError(failure);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result serverError(_ServerError<T> value),
+    @required Result localDatabaseError(_LocalDatabaseError<T> value),
+  }) {
+    assert(serverError != null);
+    assert(localDatabaseError != null);
+    return localDatabaseError(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result serverError(_ServerError<T> value),
+    Result localDatabaseError(_LocalDatabaseError<T> value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (localDatabaseError != null) {
+      return localDatabaseError(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LocalDatabaseError<T> implements Failure<T> {
+  const factory _LocalDatabaseError(T failure) = _$_LocalDatabaseError<T>;
+
+  @override
+  T get failure;
+  @override
+  _$LocalDatabaseErrorCopyWith<T, _LocalDatabaseError<T>> get copyWith;
 }

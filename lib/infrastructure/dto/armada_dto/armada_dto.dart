@@ -28,6 +28,14 @@ class ArmadaDto extends DataTransferObject {
             (json['hours'] as List<dynamic>).map((e) => e.toString()).toList(),
       );
 
+  Map<String, dynamic> toJson() => {
+        'puerto': puerto,
+        'fecha': fecha,
+        'ndatos': ndatos,
+        'values': values,
+        'hours': hours,
+      };
+
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;

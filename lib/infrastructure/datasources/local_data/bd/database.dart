@@ -29,6 +29,11 @@ class Database {
     await box.close();
   }
 
+  /// Retorna un elemento de la base datos. Por defecto devuelve el último valor
+  /// introducido en la base de datos.
+  ///
+  /// Si se introduce un argumento [key], retornará el valor correspondiente
+  /// a esa clave.
   Future<Map<String, dynamic>> getFromDatabase({
     @required String boxName,
     int key,

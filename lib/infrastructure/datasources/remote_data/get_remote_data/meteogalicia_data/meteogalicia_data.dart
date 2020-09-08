@@ -20,7 +20,7 @@ class MeteogaliciaData {
     @required this.dio,
   });
 
-  Future<Either<ServerFailure, MeteogaliciaDto>> getData() async {
+  Future<Either<Failure, MeteogaliciaDto>> getData() async {
     try {
       final uri = UrlService.meteoGalicia(
         diasPrediccion: diasPrediccion,
@@ -30,15 +30,15 @@ class MeteogaliciaData {
       if (_isException(response)) {
         final meteogaliciaException = MeteogaliciaException.fromjson(response);
         logger.e(meteogaliciaException.message);
-        return left(ServerFailure<MeteogaliciaException>.serverError(
-            meteogaliciaException));
+        return left(
+            Failure<MeteogaliciaException>.serverError(meteogaliciaException));
       }
       final result = MeteogaliciaDto.fromJson(response);
       logger.i(result.toString());
       return right(result);
     } on PlatformException catch (error) {
       logger.e(error.message);
-      return left(ServerFailure<PlatformException>.serverError(error));
+      return left(Failure<PlatformException>.serverError(error));
     }
   }
 

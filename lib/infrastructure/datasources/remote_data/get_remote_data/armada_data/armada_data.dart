@@ -16,8 +16,7 @@ class ArmadaData {
     this.date,
   });
 
-  Future<Either<ServerFailure, ArmadaDto>> getData(
-      {bool isDiaria = true}) async {
+  Future<Either<Failure, ArmadaDto>> getData({bool isDiaria = true}) async {
     try {
       final dio = Dio();
       final uri = isDiaria
@@ -30,7 +29,7 @@ class ArmadaData {
     } on DioError catch (e) {
       logger.e('Armada: ${e.request.path}');
       logger.e(e.error);
-      return left(ServerFailure<DioError>.serverError(e));
+      return left(Failure<DioError>.serverError(e));
     }
   }
 }

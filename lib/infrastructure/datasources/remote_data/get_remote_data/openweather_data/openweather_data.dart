@@ -20,7 +20,7 @@ class OpenweatherData {
     this.localidad,
   });
 
-  Future<Either<ServerFailure, OpenweatherDto>> getData() async {
+  Future<Either<Failure, OpenweatherDto>> getData() async {
     final dio = Dio();
     try {
       final coords = await Location().getLocation();
@@ -34,8 +34,8 @@ class OpenweatherData {
         logger.d('_isException: ${_isException(response)}');
         final openweatherException = OpenweatherException.fromJson(response);
         logger.e('Mensaje: ${openweatherException.message}');
-        return left(ServerFailure<OpenweatherException>.serverError(
-            openweatherException));
+        return left(
+            Failure<OpenweatherException>.serverError(openweatherException));
       }
       final result = isHoy
           ? OpenweatherActualDto.fromJson(response)
@@ -45,7 +45,7 @@ class OpenweatherData {
     } on DioError catch (e) {
       logger.e(e.request.path);
       logger.e(e.error);
-      return left(ServerFailure<DioError>.serverError(e));
+      return left(Failure<DioError>.serverError(e));
     }
   }
 

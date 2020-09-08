@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart' show required;
-import 'package:hai_praia/domain/core/logger.dart';
-import 'package:hai_praia/infrastructure/dto/openweather_dto/openweather_dto.dart';
 
-class OpenweatherException extends OpenweatherDto {
+import '../../../../domain/core/logger.dart';
+
+class OpenweatherException {
   final Object cod;
   final String message;
 

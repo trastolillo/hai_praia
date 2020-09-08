@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart' show required;
 
 import '../../../../../domain/core/localizacion.dart';
 import '../../../../../domain/core/logger.dart';
@@ -14,10 +13,10 @@ class SunriseSunsetData {
   final dio = Dio();
 
   SunriseSunsetData({
-    @required this.date,
+    this.date,
   });
 
-  Future<Either<ServerFailure, SunriseSunsetDto>> getData() async {
+  Future<Either<Failure, SunriseSunsetDto>> getData() async {
     try {
       final coordenadas = await Localizacion().coordenadas;
       final uri = UrlService.sunriseSunset(
@@ -30,7 +29,7 @@ class SunriseSunsetData {
         final sunriseSunsetException =
             SunriseSunsetException.fromJson(response);
         logger.e(sunriseSunsetException.status);
-        return left(ServerFailure<SunriseSunsetException>.serverError(
+        return left(Failure<SunriseSunsetException>.serverError(
             sunriseSunsetException));
       }
       final result = SunriseSunsetDto.fromJson(response);
@@ -39,7 +38,7 @@ class SunriseSunsetData {
     } on DioError catch (e) {
       logger.e('SunriseSunset: ${e.request.path}');
       logger.e(e.error);
-      return left(ServerFailure<DioError>.serverError(e));
+      return left(Failure<DioError>.serverError(e));
     }
   }
 
