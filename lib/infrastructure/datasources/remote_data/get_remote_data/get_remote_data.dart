@@ -26,7 +26,7 @@ class RemoteData {
   }) async {
     switch (dtoObject) {
       case DtoObject.armada:
-        return _getArmadaData(puerto: localizacion.localidad, date: date);
+        return _getArmadaData(puerto: localizacion, date: date);
         break;
       case DtoObject.openweatherActual:
         return _getOpenweatherData(
@@ -38,20 +38,24 @@ class RemoteData {
         break;
       case DtoObject.sunriseSunset:
         return _getSunriseSunsetData(date: date);
+        break;
+      default:
+        return left(
+          const Failure<String>.serverError('Remote Data - Error imposible'),
+        );
     }
-    return null;
   }
 
   Future<Either<Failure, ArmadaDto>> _getArmadaData({
-    @required String puerto,
+    @required Localizacion puerto,
     @required DateTime date,
     bool isDiaria = true,
   }) async {
     try {
       final dio = Dio();
       final uri = isDiaria
-          ? UrlService.armadaDiaria(puerto: puerto, date: date)
-          : UrlService.armadaMensual(puerto: puerto, date: date);
+          ? UrlService.armadaDiaria(puerto: puerto.localidad, date: date)
+          : UrlService.armadaMensual(puerto: puerto.localidad, date: date);
       final response = (await dio.getUri(uri)).data as Map<String, dynamic>;
       final result = ArmadaDto.fromJson(response);
       logger.d(result);

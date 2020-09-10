@@ -22,6 +22,7 @@
 
 # Flutter/Dart/Pub related
 **/doc/api/
+**/url_services/
 **/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins
@@ -44,4 +45,3 @@ app.*.map.json
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
-lib/infrastructure/datasources/remote_data/url_services/

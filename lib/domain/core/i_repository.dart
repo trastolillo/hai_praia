@@ -8,7 +8,7 @@ import 'value_failures.dart';
 
 abstract class IRepository {
   Future<Either<ValueFailure, Prediccion>> getData({
-    @required From tipoPrediccion,
+    @required String tipoPrediccion,
     @required Localizacion localizacion,
     bool isHardUpdate = false,
   });

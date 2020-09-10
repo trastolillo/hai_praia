@@ -19,7 +19,7 @@ class Repository implements IRepository {
 
   @override
   Future<Either<ValueFailure, Prediccion>> getData({
-    From tipoPrediccion,
+    String tipoPrediccion,
     Localizacion localizacion,
     bool isHardUpdate = false,
   }) {
