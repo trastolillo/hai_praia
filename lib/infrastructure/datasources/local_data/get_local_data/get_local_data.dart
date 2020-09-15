@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hai_praia/domain/core/logger.dart';
 import 'package:hai_praia/infrastructure/core/enums_infraestructure.dart';
 import 'package:hai_praia/infrastructure/dto/armada_dto/armada_dto.dart';
 import 'package:hai_praia/infrastructure/dto/openweather_dto/actual/openweather_actual_dto.dart';

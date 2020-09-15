@@ -2,23 +2,23 @@ import 'package:flutter/foundation.dart';
 import 'package:hai_praia/domain/core/enums.dart';
 
 class TablaMareas {
-  final List<Repunte> tabla;
+  final List<Repunte> repuntes;
 
   TablaMareas({
-    @required this.tabla,
+    @required this.repuntes,
   });
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
-    return o is TablaMareas && listEquals(o.tabla, tabla);
+    return o is TablaMareas && listEquals(o.repuntes, repuntes);
   }
 
   @override
-  int get hashCode => tabla.hashCode;
+  int get hashCode => repuntes.hashCode;
 
   @override
-  String toString() => 'TablaMareas(tabla: $tabla)';
+  String toString() => 'TablaMareas(tabla: $repuntes)';
 }
 
 class Repunte {
@@ -32,6 +32,8 @@ class Repunte {
 
   TipoRepunte get tipoRepunte =>
       valor > 2.2 ? TipoRepunte.pleamar : TipoRepunte.bajamar;
+
+  bool get isBajamar => tipoRepunte == TipoRepunte.bajamar;
 
   @override
   bool operator ==(Object o) {

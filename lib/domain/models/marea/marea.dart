@@ -1,19 +1,27 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
-import 'package:hai_praia/domain/core/value_failures.dart';
 
+import 'package:hai_praia/domain/core/value_failures.dart';
 import 'package:hai_praia/domain/models/marea/tabla_mareas.dart';
 import 'package:hai_praia/domain/models/value_objects/value_validators.dart';
 
 import '../prediccion.dart';
 
+class ListaMareas extends Prediccion {
+  final List<Marea> listaMareas;
+
+  ListaMareas({
+    this.listaMareas,
+  });
+}
+
 class Marea extends Prediccion {
-  final TablaMareas tablaMareas;
+  final Repunte repunte;
   final Atmosfera atmosfera;
   final Cielo cielo;
 
   Marea({
-    @required this.tablaMareas,
+    @required this.repunte,
     @required this.atmosfera,
     @required this.cielo,
   });
@@ -23,18 +31,17 @@ class Marea extends Prediccion {
     if (identical(this, o)) return true;
     {}
     return o is Marea &&
-        o.tablaMareas == tablaMareas &&
+        o.repunte == repunte &&
         o.atmosfera == atmosfera &&
         o.cielo == cielo;
   }
 
   @override
-  int get hashCode =>
-      tablaMareas.hashCode ^ atmosfera.hashCode ^ cielo.hashCode;
+  int get hashCode => repunte.hashCode ^ atmosfera.hashCode ^ cielo.hashCode;
 
   @override
   String toString() =>
-      'Marea(tablaMareas: $tablaMareas, atmosfera: $atmosfera, cielo: $cielo)';
+      'Marea(repunte: $repunte, atmosfera: $atmosfera, cielo: $cielo)';
 }
 
 class Cielo {
