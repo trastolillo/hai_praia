@@ -1,13 +1,22 @@
 extension DateTimeExtension on DateTime {
   DateTime get onlyDate => DateTime(year, month, day);
+
   int get secondsSinceEpoch => millisecondsSinceEpoch ~/ 1000;
+
   static DateTime fromSecondsSinceEpoch(int seconds) =>
       DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
 }
 
-void foo() {
-  final bla = DateTimeExtension.fromSecondsSinceEpoch(100000000);
-}
+// Redondea la hora en tercios a la hora local empezando en las
+// 00 horas.
+// int roundTimeInThirds(int millisecondsSinceEpoch) {
+//   final date = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
+//   final tercios = date.hour ~/ 3;
+//   final resto = date.hour.toDouble() / 3 - tercios;
+//   final horaFinal = resto < 0.5 ? tercios * 3 : (tercios + 1) * 3;
+//   return DateTime(date.year, date.month, date.day, horaFinal)
+//       .millisecondsSinceEpoch;
+// }
 
 int monthStringToInt(String monthString) {
   switch (monthString.toLowerCase()) {

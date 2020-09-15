@@ -5,7 +5,7 @@ import '../openweather_dto.dart';
 import 'sub_dto/sub_dto.dart';
 
 class OpenweatherActualDto extends OpenweatherDto {
-  OpenweatherActualDto({
+  const OpenweatherActualDto({
     @required this.coord,
     @required this.weather,
     @required this.base,
@@ -56,7 +56,7 @@ class OpenweatherActualDto extends OpenweatherDto {
       );
 
   Map<String, dynamic> toJson() => {
-        'coord': coord,
+        'coord': coord.toJson(),
         'weather': weather.map((weatherItem) => weatherItem.toJson()).toList(),
         'base': base,
         'main': main.toJson(),

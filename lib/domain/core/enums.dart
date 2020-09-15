@@ -16,3 +16,5 @@ enum From {
   openweather,
   actual,
 }
+
+enum TipoRepunte { bajamar, pleamar }

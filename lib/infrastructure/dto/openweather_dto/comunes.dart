@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class Coord {
-  Coord({
+  const Coord({
     @required this.lon,
     @required this.lat,
   });
@@ -40,6 +40,9 @@ class Main {
     @required this.tempMax,
     @required this.pressure,
     @required this.humidity,
+    this.seaLevel,
+    this.grndLevel,
+    this.tempKf,
   });
 
   final double temp;
@@ -64,7 +67,9 @@ class Main {
     @required this.tempKf,
   });
 
-  factory Main.fromJson(Map<String, dynamic> json) => Main(
+  factory Main.fromJson(Map<String, dynamic> json) {
+    if (json['sea_level'] == null) {
+      return Main(
         temp: (json['temp'] as num).toDouble(),
         feelsLike: (json['feels_like'] as num).toDouble(),
         tempMin: (json['temp_min'] as num).toDouble(),
@@ -72,8 +77,8 @@ class Main {
         pressure: (json['pressure'] as num).toInt(),
         humidity: (json['humidity'] as num).toInt(),
       );
-
-  factory Main.fromJsonPrediccion(Map<String, dynamic> json) => Main.mainClass(
+    } else {
+      return Main.mainClass(
         temp: (json['temp'] as num).toDouble(),
         feelsLike: (json['feels_like'] as num).toDouble(),
         tempMin: (json['temp_min'] as num).toDouble(),
@@ -84,27 +89,31 @@ class Main {
         grndLevel: (json['grnd_level'] as num).toInt(),
         tempKf: (json['temp_kf'] as num).toDouble(),
       );
+    }
+  }
 
-  Map<String, dynamic> toJson() => {
-        "temp": temp,
-        "feels_like": feelsLike,
-        "temp_min": tempMin,
-        "temp_max": tempMax,
-        "pressure": pressure,
-        "humidity": humidity,
-      };
-
-  Map<String, dynamic> toJsonPrediccion() => {
-        "temp": temp,
-        "feels_like": feelsLike,
-        "temp_min": tempMin,
-        "temp_max": tempMax,
-        "pressure": pressure,
-        "humidity": humidity,
-        "sea_level": seaLevel,
-        "grnd_level": grndLevel,
-        "temp_kf": tempKf,
-      };
+  Map<String, dynamic> toJson() {
+    return seaLevel == null
+        ? {
+            "temp": temp,
+            "feels_like": feelsLike,
+            "temp_min": tempMin,
+            "temp_max": tempMax,
+            "pressure": pressure,
+            "humidity": humidity,
+          }
+        : {
+            "temp": temp,
+            "feels_like": feelsLike,
+            "temp_min": tempMin,
+            "temp_max": tempMax,
+            "pressure": pressure,
+            "humidity": humidity,
+            "sea_level": seaLevel,
+            "grnd_level": grndLevel,
+            "temp_kf": tempKf,
+          };
+  }
 
   @override
   bool operator ==(Object o) {
@@ -135,7 +144,7 @@ class Main {
 }
 
 class Weather {
-  Weather({
+  const Weather({
     @required this.id,
     @required this.main,
     @required this.description,
@@ -183,7 +192,7 @@ class Weather {
 }
 
 class Clouds {
-  Clouds({
+  const Clouds({
     @required this.all,
   });
 
@@ -211,7 +220,7 @@ class Clouds {
 }
 
 class Wind {
-  Wind({
+  const Wind({
     @required this.speed,
     @required this.deg,
   });

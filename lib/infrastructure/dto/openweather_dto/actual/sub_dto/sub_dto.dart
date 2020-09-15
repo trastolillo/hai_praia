@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' show required;
 
 class Sys {
-  Sys({
+  const Sys({
     @required this.type,
     @required this.id,
     @required this.country,

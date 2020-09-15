@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 import 'enums.dart';
 import 'localizacion.dart';
-import 'prediccion.dart';
+import '../models/prediccion.dart';
 import 'value_failures.dart';
 
 abstract class IRepository {

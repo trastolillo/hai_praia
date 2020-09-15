@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import '../../comunes.dart';
 
 class City {
-  City({
+  const City({
     @required this.id,
     @required this.name,
     @required this.coord,
@@ -105,7 +105,7 @@ class ListElement {
 
   factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
         dt: (json['dt'] as num).toInt(),
-        main: Main.fromJsonPrediccion(json['main'] as Map<String, dynamic>),
+        main: Main.fromJson(json['main'] as Map<String, dynamic>),
         weather: (json['weather'] as List<dynamic>)
             .map((weatherItem) =>
                 Weather.fromJson(weatherItem as Map<String, dynamic>))
@@ -121,13 +121,14 @@ class ListElement {
 
   Map<String, dynamic> toJson() => {
         'dt': dt,
+        // TODO main tiene dos métodos (actual y prediccion), pero sólo aplica uno
         'main': main.toJson(),
         'weather': weather.map((e) => e.toJson()).toList(),
         'clouds': clouds.toJson(),
         'wind': wind.toJson(),
         'visibility': visibility,
         'pop': pop,
-        'rain': rain,
+        'rain': rain.toJson(),
         'sys': sys.toJson(),
         'dt_txt': dtTxt,
       };
@@ -201,7 +202,7 @@ class Rain {
 }
 
 class Sys {
-  Sys({
+  const Sys({
     @required this.pod,
   });
 

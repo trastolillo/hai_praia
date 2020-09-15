@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import '../data_transfer_object.dart';
 
 class ArmadaDto extends DataTransferObject {
-  ArmadaDto({
+  const ArmadaDto({
     @required this.puerto,
     @required this.fecha,
     @required this.ndatos,

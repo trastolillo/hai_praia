@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import '../data_transfer_object.dart';
 
 class SunriseSunsetDto extends DataTransferObject {
-  SunriseSunsetDto({
+  const SunriseSunsetDto({
     @required this.results,
     @required this.status,
   });
@@ -36,7 +36,7 @@ class SunriseSunsetDto extends DataTransferObject {
 }
 
 class Results {
-  Results({
+  const Results({
     @required this.sunrise,
     @required this.sunset,
     @required this.solarNoon,
