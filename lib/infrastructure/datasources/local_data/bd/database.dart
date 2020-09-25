@@ -60,9 +60,11 @@ class Database {
     }
   }
 
-  Future<bool> isDatabaseEmpty({@required String boxName}) async {
+  Future<bool> isEmpty({@required String boxName}) async {
     final box = await _openBox(boxName);
-    return box.isEmpty;
+    final isEmpty = box.isEmpty;
+    box.close();
+    return isEmpty;
   }
 
   Future<Box> _openBox(String boxName) async {

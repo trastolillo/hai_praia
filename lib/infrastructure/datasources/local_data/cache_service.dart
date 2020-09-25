@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:hai_praia/infrastructure/dto/data_transfer_object.dart';
 import 'package:location/location.dart';
 
-import '../../../domain/core/localizacion.dart';
 import '../../core/date_utils.dart';
 import '../../dto/armada_dto/armada_dto.dart';
 import '../../dto/openweather_dto/actual/openweather_actual_dto.dart';
@@ -9,19 +9,13 @@ import '../../dto/openweather_dto/prediccion/openweather_prediccion_dto.dart';
 import '../../dto/sunrise_sunset_dto/sunrise_sunset_dto.dart';
 
 class CacheService {
-  final OpenweatherActualDto openweatherActualDto;
-  final OpenweatherPrediccionDto openweatherPrediccionDto;
-  final SunriseSunsetDto sunriseSunsetDto;
-  final ArmadaDto armadaDto;
+  final DataTransferObject dto;
 
   CacheService({
-    @required this.openweatherActualDto,
-    @required this.openweatherPrediccionDto,
-    @required this.sunriseSunsetDto,
-    @required this.armadaDto,
+    @required this.dto,
   });
 
-  DateTime get _timeToUpdateArmada {
+  DateTime _timeToUpdateArmada(ArmadaDto armadaDto) {
     final isMensual = armadaDto.values.length > 28;
     DateTime getDataDate;
     // Obtención de la fecha en que se obtienen los datos
@@ -45,33 +39,45 @@ class CacheService {
 
   // TODO Implementar geolocalización por Provincia
   Future<bool> _isLocationChanged(LocationData locationData) async {
-    return true;
+    return false;
   }
 
-  DateTime get _timeToUpdateOpenweatherActual {
+  DateTime _timeToUpdateOpenweatherActual(
+      OpenweatherActualDto openweatherActualDto) {
     final getDataDate =
         DateTimeExtension.fromSecondsSinceEpoch(openweatherActualDto.dt);
     return getDataDate.add(const Duration(hours: 3));
   }
 
-  DateTime get _timeToUpdateOpenweatherPrediccion {
+  DateTime _timeToUpdateOpenweatherPrediccion(
+      OpenweatherPrediccionDto openweatherPrediccionDto) {
     final ultimaIteracion = openweatherPrediccionDto.list.length - 1 ?? 0;
     return DateTimeExtension.fromSecondsSinceEpoch(
             openweatherPrediccionDto.list[ultimaIteracion].dt)
         .onlyDate;
   }
 
-  DateTime get _timeToUpdateSunriseSunset =>
+  DateTime _timeToUpdateSunriseSunset(SunriseSunsetDto sunriseSunsetDto) =>
       DateTime.parse(sunriseSunsetDto.results.sunrise).onlyDate;
 
-  bool isArmadaUpdate() => DateTime.now().compareTo(_timeToUpdateArmada) <= 0;
-
-  bool isOpenweatherActualUpdate() =>
-      DateTime.now().compareTo(_timeToUpdateOpenweatherActual) <= 0;
-
-  bool isOpenweatherPrediccionUpdate() =>
-      DateTime.now().compareTo(_timeToUpdateOpenweatherPrediccion) <= 0;
-
-  bool isSunriseSunsetUpdate() =>
-      DateTime.now().compareTo(_timeToUpdateSunriseSunset) <= 0;
+  bool get isDtoUpdate {
+    if (dto is ArmadaDto) {
+      return DateTime.now().compareTo(_timeToUpdateArmada(dto as ArmadaDto)) <=
+          0;
+    } else if (dto is OpenweatherActualDto) {
+      return DateTime.now().compareTo(
+              _timeToUpdateOpenweatherActual(dto as OpenweatherActualDto)) <=
+          0;
+    } else if (dto is OpenweatherPrediccionDto) {
+      return DateTime.now().compareTo(_timeToUpdateOpenweatherPrediccion(
+              dto as OpenweatherPrediccionDto)) <=
+          0;
+    } else if (dto is SunriseSunsetDto) {
+      return DateTime.now()
+              .compareTo(_timeToUpdateSunriseSunset(dto as SunriseSunsetDto)) <=
+          0;
+    } else {
+      return false;
+    }
+  }
 }

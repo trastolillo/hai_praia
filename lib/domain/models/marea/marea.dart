@@ -13,6 +13,19 @@ class ListaMareas extends Prediccion {
   ListaMareas({
     this.listaMareas,
   });
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;  
+    return o is ListaMareas &&
+      listEquals(o.listaMareas, listaMareas);
+  }
+
+  @override
+  int get hashCode => listaMareas.hashCode;
+
+  @override
+  String toString() => 'ListaMareas(listaMareas: $listaMareas)';
 }
 
 class Marea extends Prediccion {

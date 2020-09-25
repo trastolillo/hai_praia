@@ -2,15 +2,16 @@ import 'package:dartz/dartz.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hai_praia/infrastructure/core/enums_infraestructure.dart';
-import 'package:hai_praia/infrastructure/dto/armada_dto/armada_dto.dart';
-import 'package:hai_praia/infrastructure/dto/openweather_dto/actual/openweather_actual_dto.dart';
-import 'package:hai_praia/infrastructure/dto/openweather_dto/prediccion/openweather_prediccion_dto.dart';
-import 'package:hai_praia/infrastructure/dto/sunrise_sunset_dto/sunrise_sunset_dto.dart';
 
 import '../../../../domain/core/server_failures.dart';
+import '../../../core/enums_infraestructure.dart';
+import '../../../dto/armada_dto/armada_dto.dart';
 import '../../../dto/data_transfer_object.dart';
+import '../../../dto/openweather_dto/actual/openweather_actual_dto.dart';
+import '../../../dto/openweather_dto/prediccion/openweather_prediccion_dto.dart';
+import '../../../dto/sunrise_sunset_dto/sunrise_sunset_dto.dart';
 import '../bd/database.dart';
+import '../cache_service.dart';
 
 class LocalData {
   Database database;
@@ -55,6 +56,14 @@ class LocalData {
     }
     final objeto = _fromJsonSwitch(dtoObject, map);
     return right(objeto);
+  }
+
+  Future<bool> isDatabaseEmpty(DtoObject dtoObject) async =>
+      database.isEmpty(boxName: EnumToString.parse(dtoObject));
+
+  bool isDtoUpdate(DataTransferObject dto) {
+    final CacheService cacheService = CacheService(dto: dto);
+    return cacheService.isDtoUpdate;
   }
 
   DataTransferObject _fromJsonSwitch(

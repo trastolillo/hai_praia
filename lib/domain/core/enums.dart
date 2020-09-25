@@ -11,10 +11,9 @@ enum VientoDel {
 }
 
 /// Tipo de predicción
-enum From {
-  meteogalicia,
-  openweather,
-  actual,
+enum TipoPrediccion {
+  listaMareas,
+  tiempoActual,
 }
 
 enum TipoRepunte { bajamar, pleamar }

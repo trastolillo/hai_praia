@@ -25,7 +25,7 @@ class Repunte {
   final DateTime hora;
   final double valor;
 
-  Repunte({
+  const Repunte({
     @required this.hora,
     @required this.valor,
   });

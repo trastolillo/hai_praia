@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 
+import '../../../domain/core/errors.dart';
+import '../../../domain/core/value_failures.dart';
 import '../../../domain/models/marea/marea.dart';
 import '../../../domain/models/marea/tabla_mareas.dart';
 import '../armada_dto/armada_dto.dart';
@@ -17,6 +19,17 @@ class ListaMareasAdapter {
     @required this.openweatherPrediccionDto,
     @required this.sunriseSunsetDto,
   });
+
+  /// [TablaMareas] con la lista de repuntes del objeto [ArmadaDto]
+  /// pasado en el constructor de [ListaMareasAdapter]
+  TablaMareas get _tablaMareas {
+    final List<Repunte> listaRepuntes = [];
+    for (var i = 0; i < armadaDto.hours.length; i++) {
+      final DateTime hora = DateTime.parse(armadaDto.hours[i]);
+      listaRepuntes.add(Repunte(hora: hora, valor: armadaDto.values[i]));
+    }
+    return TablaMareas(repuntes: listaRepuntes);
+  }
 
   /// Devuelve una [ListaMareas] desde los [DataTransferObject]
   ListaMareas dtoToListaMareas() {
@@ -55,20 +68,14 @@ class ListaMareasAdapter {
   /// Retorna la predicción durante tres horas correspondiente al momento que
   /// se pasa por argumento
   ListElement _prediccion(int hora) {
-    return openweatherPrediccionDto.list.firstWhere((listElement) {
+    final listElement = openweatherPrediccionDto.list.firstWhere((listElement) {
       final diferenciaEntreHoras = hora - listElement.dt * 1000;
       return diferenciaEntreHoras > 0 && diferenciaEntreHoras < 10800000;
     });
-  }
-
-  /// [TablaMareas] con la lista de repuntes del objeto [ArmadaDto]
-  /// pasado en el constructor de [ListaMareasAdapter]
-  TablaMareas get _tablaMareas {
-    final List<Repunte> listaRepuntes = [];
-    for (var i = 0; i < armadaDto.hours.length; i++) {
-      final DateTime hora = DateTime.parse(armadaDto.hours[i]);
-      listaRepuntes.add(Repunte(hora: hora, valor: armadaDto.values[i]));
+    if (listElement != null) {
+      return listElement;
+    } else {
+      throw UnexpectedValueError(ValueFailure.unexpectedError(listElement));
     }
-    return TablaMareas(repuntes: listaRepuntes);
   }
 }

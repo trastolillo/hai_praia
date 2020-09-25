@@ -48,8 +48,8 @@ class RemoteData {
 
   Future<Either<Failure, ArmadaDto>> _getArmadaData({
     @required Localizacion puerto,
-    @required DateTime date,
-    bool isDiaria = true,
+    DateTime date,
+    bool isDiaria = false,
   }) async {
     try {
       final dio = Dio();
