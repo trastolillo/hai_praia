@@ -61,9 +61,13 @@ class LocalData {
   Future<bool> isDatabaseEmpty(DtoObject dtoObject) async =>
       database.isEmpty(boxName: EnumToString.parse(dtoObject));
 
-  bool isDtoUpdate(DataTransferObject dto) {
-    final CacheService cacheService = CacheService(dto: dto);
-    return cacheService.isDtoUpdate;
+  Future<bool> isDtoUpdate(DtoObject dtoObject) async {
+    final CacheService cacheService = CacheService(dtoObject: dtoObject);
+    final key = await database.keyFromLastItem(
+      boxName: EnumToString.parse(dtoObject),
+    );
+    if (key == -1) return false;
+    return cacheService.isDtoUpdate(key);
   }
 
   DataTransferObject _fromJsonSwitch(

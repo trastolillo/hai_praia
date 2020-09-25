@@ -60,6 +60,18 @@ class Database {
     }
   }
 
+  Future<int> keyFromLastItem({
+    @required String boxName,
+  }) async {
+    final box = await _openBox(boxName);
+    if (box.isEmpty) {
+      return -1;
+    }
+    final lastIndex = box.length - 1;
+    final key = box.keyAt(lastIndex);
+    return key as int;
+  }
+
   Future<bool> isEmpty({@required String boxName}) async {
     final box = await _openBox(boxName);
     final isEmpty = box.isEmpty;
@@ -71,6 +83,7 @@ class Database {
     try {
       return hive.openBox(boxName);
     } catch (e) {
+      // TODO: implemetar error para Database
       throw Exception();
     }
   }
