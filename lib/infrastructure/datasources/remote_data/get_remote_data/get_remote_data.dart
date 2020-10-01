@@ -37,7 +37,7 @@ class RemoteData {
             localidad: localizacion.localidad, isHoy: false);
         break;
       case DtoObject.sunriseSunset:
-        return _getSunriseSunsetData(date: date);
+        return _getSunriseSunsetData(numeroDeDiasDePrediccion: 6);
         break;
       default:
         return left(

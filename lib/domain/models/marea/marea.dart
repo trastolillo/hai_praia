@@ -1,11 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:hai_praia/domain/core/value_failures.dart';
-import 'package:hai_praia/domain/models/marea/tabla_mareas.dart';
-import 'package:hai_praia/domain/models/value_objects/value_validators.dart';
-
+import '../../core/value_failures.dart';
 import '../prediccion.dart';
+import '../value_objects/value_validators.dart';
+import 'tabla_mareas.dart';
 
 class ListaMareas extends Prediccion {
   final List<Marea> listaMareas;
@@ -16,9 +15,8 @@ class ListaMareas extends Prediccion {
 
   @override
   bool operator ==(Object o) {
-    if (identical(this, o)) return true;  
-    return o is ListaMareas &&
-      listEquals(o.listaMareas, listaMareas);
+    if (identical(this, o)) return true;
+    return o is ListaMareas && listEquals(o.listaMareas, listaMareas);
   }
 
   @override

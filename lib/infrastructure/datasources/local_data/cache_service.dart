@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:hai_praia/domain/core/logger.dart';
 import 'package:location/location.dart';
 
-import '../../core/date_utils.dart';
+import '../../../domain/core/date_utils.dart';
 import '../../core/enums_infraestructure.dart';
 
 class CacheService {
