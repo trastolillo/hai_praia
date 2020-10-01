@@ -11,30 +11,36 @@ import '../../url_services/url_services.dart';
 class SunriseSunsetData {
   final DateTime date;
   final dio = Dio();
+  static const numeroDeDiasPrediccion = 5;
 
   SunriseSunsetData({
     this.date,
   });
 
-  Future<Either<Failure, SunriseSunsetDto>> getData() async {
+  // TODO: borrar este archivo y análogos
+  Future<Either<Failure, List<SunriseSunsetDto>>> getData() async {
     try {
-      final coordenadas = await Localizacion().coordenadas;
-      final uri = UrlService.sunriseSunset(
-        location: coordenadas,
-        date: date,
-      );
-      final response = (await dio.getUri(uri)).data as Map<String, dynamic>;
-      logger.i(response['status'].toString());
-      if (_isException(response)) {
-        final sunriseSunsetException =
-            SunriseSunsetException.fromJson(response);
-        logger.e(sunriseSunsetException.status);
-        return left(Failure<SunriseSunsetException>.serverError(
-            sunriseSunsetException));
+      final List<SunriseSunsetDto> sunriseSunsetDtoList = [];
+      for (var i = 0; i < numeroDeDiasPrediccion; i++) {
+        final dia = DateTime.now().add(Duration(days: i));
+        final coordenadas = await Localizacion().coordenadas;
+        final uri = UrlService.sunriseSunset(
+          location: coordenadas,
+          date: dia,
+        );
+        final response = (await dio.getUri(uri)).data as Map<String, dynamic>;
+        logger.i(response['status'].toString());
+        if (_isException(response)) {
+          final sunriseSunsetException =
+              SunriseSunsetException.fromJson(response);
+          logger.e(sunriseSunsetException.status);
+          return left(Failure<SunriseSunsetException>.serverError(
+              sunriseSunsetException));
+        }
+        final result = SunriseSunsetDto.fromJson(response);
+        sunriseSunsetDtoList.add(result);
       }
-      final result = SunriseSunsetDto.fromJson(response);
-      logger.i(result);
-      return right(result);
+      return right(sunriseSunsetDtoList);
     } on DioError catch (e) {
       logger.e('SunriseSunset: ${e.request.path}');
       logger.e(e.error);

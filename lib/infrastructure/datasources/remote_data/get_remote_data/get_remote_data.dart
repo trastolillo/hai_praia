@@ -100,28 +100,33 @@ class RemoteData {
     }
   }
 
-  Future<Either<Failure, SunriseSunsetDto>> _getSunriseSunsetData({
-    DateTime date,
-  }) async {
+  // TODO: Test
+  Future<Either<Failure, SunriseSunsetDtoList>> _getSunriseSunsetData(
+      {int numeroDeDiasDePrediccion}) async {
     try {
+      final List<SunriseSunsetDto> sunSunList = [];
       final dio = Dio();
       final coordenadas = await Localizacion().coordenadas;
-      final uri = UrlService.sunriseSunset(
-        location: coordenadas,
-        date: date,
-      );
-      final response = (await dio.getUri(uri)).data as Map<String, dynamic>;
-      logger.i(response['status'].toString());
-      if (response['status'] != 'OK') {
-        final sunriseSunsetException =
-            SunriseSunsetException.fromJson(response);
-        logger.e(sunriseSunsetException.status);
-        return left(Failure<SunriseSunsetException>.serverError(
-            sunriseSunsetException));
+      for (var i = 0; i < numeroDeDiasDePrediccion; i++) {
+        final dia = DateTime.now().add(Duration(days: i));
+        final uri = UrlService.sunriseSunset(
+          location: coordenadas,
+          date: dia,
+        );
+        final response = (await dio.getUri(uri)).data as Map<String, dynamic>;
+        logger.i(response['status'].toString());
+        if (response['status'] != 'OK') {
+          final sunriseSunsetException =
+              SunriseSunsetException.fromJson(response);
+          logger.e(sunriseSunsetException.status);
+          return left(Failure<SunriseSunsetException>.serverError(
+              sunriseSunsetException));
+        }
+        final result = SunriseSunsetDto.fromJson(response);
+        logger.i(result);
+        sunSunList.add(result);
       }
-      final result = SunriseSunsetDto.fromJson(response);
-      logger.i(result);
-      return right(result);
+      return right(SunriseSunsetDtoList(sunSunList));
     } on DioError catch (e) {
       logger.e('SunriseSunset: ${e.request.path}');
       logger.e(e.error);

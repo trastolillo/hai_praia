@@ -2,6 +2,24 @@ import 'package:flutter/foundation.dart';
 
 import '../data_transfer_object.dart';
 
+class SunriseSunsetDtoList extends DataTransferObject {
+  final List<SunriseSunsetDto> sunriseList;
+
+  SunriseSunsetDtoList(this.sunriseList);
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+    return o is SunriseSunsetDtoList && listEquals(o.sunriseList, sunriseList);
+  }
+
+  @override
+  int get hashCode => sunriseList.hashCode;
+
+  @override
+  String toString() => 'SunriseSunsetDtoList(sunriseList: $sunriseList)';
+}
+
 class SunriseSunsetDto extends DataTransferObject {
   const SunriseSunsetDto({
     @required this.results,
