@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../domain/core/enums.dart';
 import '../../domain/core/i_repository.dart';
@@ -17,6 +18,7 @@ import '../dto/data_transfer_object.dart';
 import '../dto/openweather_dto/prediccion/openweather_prediccion_dto.dart';
 import '../dto/sunrise_sunset_dto/sunrise_sunset_dto.dart';
 
+@LazySingleton(as: IRepository)
 class Repository implements IRepository {
   final NetworkInfo networkInfo;
   final LocalData localData;
